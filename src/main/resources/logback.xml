@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <contextName>kafka_consumer</contextName>
+   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/${CONTEXT_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            daily rollover
+            <fileNamePattern>logs/${CONTEXT_NAME}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            keep 30 days' worth of history
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] [%level] %logger - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - [%p] [%thread] [%logger.%M{39}:%L] : %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- <pattern>%contextName: %d{HH:mm:ss.SSS} [%thread] %level %logger - %msg%n</pattern> -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - [%p] [%thread] [%logger.%M{39}:%L] : %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+    
+     <logger name="org.apache.http">
+        <level value="OFF"/>
+    </logger> 
+</configuration>
